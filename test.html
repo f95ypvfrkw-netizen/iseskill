@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Тап-тест</title>
+<style>
+  body { background:#101018; color:#eee; font-family:sans-serif; padding:20px; }
+  .btn { display:block; width:100%; max-width:400px; margin:14px auto; padding:22px;
+         font-size:20px; font-weight:bold; border-radius:14px; border:3px solid #ffd54a;
+         background:#2c3e6b; color:#ffd54a; }
+  .ok { background:#1e5c2e; color:#baffc9; border-color:#6f6; }
+  #log { margin-top:24px; padding:12px; background:#000; border:1px solid #444;
+         border-radius:8px; min-height:60px; font-size:15px; white-space:pre-wrap; }
+</style>
+</head>
+<body>
+  <h2 style="text-align:center">Тест тапов в Telegram</h2>
+
+  <button class="btn" onclick="hit('Кнопка 1 (inline)')">Кнопка 1 — inline onclick</button>
+  <button class="btn" id="b2">Кнопка 2 — addEventListener</button>
+  <button class="btn" onclick="hit('Кнопка 3 (touchstart)')" id="b3">Кнопка 3 — touch</button>
+
+  <div id="log">Результат появится здесь после нажатия.</div>
+
+<script>
+function hit(name){
+  var l = document.getElementById('log');
+  l.textContent = 'РАБОТАЕТ: ' + name + ' в ' + new Date().toLocaleTimeString();
+  l.style.background = '#123';
+}
+document.getElementById('b2').addEventListener('click', function(){ hit('Кнопка 2 (addEventListener)'); });
+document.getElementById('b3').addEventListener('touchstart', function(e){ e.preventDefault(); hit('Кнопка 3 (touchstart)'); }, {passive:false});
+window.addEventListener('error', function(e){
+  var l = document.getElementById('log');
+  l.textContent = 'ОШИБКА: ' + e.message;
+  l.style.background = '#300';
+});
+</script>
+</body>
+</html>
